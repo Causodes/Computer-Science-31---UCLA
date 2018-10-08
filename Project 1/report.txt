@@ -1,0 +1,27 @@
+5. If the sum of numApprove and numDisapprove is higher than the integer value of numSurveyed, the resulting percentages are nonsensical as they will add up to a number higher than 100%. Furthermore, if 0 is input for numSurveyed, there will be a div/0 error and the resultant percentages for numApprove and numDisapprove will both be "inf%". If a negative number is input for numSurveyed, the resultant percentages will be negative assuming neither numApprove nor numDisapprove are negative. If numApprove or numDisapprove are negative and numSurveyed is positive, the respective percentages will be negative as well. If the input values for numApprove and numDisapprove are the same, then the program will default to "More people disapprove than approve."
+
+6. For the logic error introduced into the program, the division operator in line 21: 
+	double pctApprove = 100.0 * numApprove / numSurveyed;
+	
+	was simply replaced with a multiplication operator instead:
+	double pctApprove = 100.0 * numApprove * numSurveyed;
+	
+	As a result, no errors are thrown during the compiling process as the code is valid, but all percentages displayed for approval ratings are nonsensical and higher than 100%, unless the values for both numSurveyed and numApprove are both 1.
+	
+7. For the compiling error introduced into the program, the division operator in line 21:
+	double pctApprove = 100.0 * numApprove / numSurveyed;
+
+	was simply replaced with a modulus operator instead:
+	double pctApprove = 100.0 * numApprove % numSurveyed;
+	
+	However, the modulus operator cannot be applied to double values, causing the program to throw the following error during compiling:
+	error C2296: '%': illegal, left operand has type 'double'
+	
+	The second error is the deletion of a semicolon in line 15:
+	cin >> numSurveyed;
+	
+	so that the line appears as
+	cin >> numSurveyed
+	
+	This causes the compiler to not recognize the end of the line after numSurveyed, causing the program to throw the following error:
+	error C2146: syntax error: missing ';' before identifier 'cout'
