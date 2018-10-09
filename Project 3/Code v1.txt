@@ -1,0 +1,254 @@
+// Project 3.cpp : Defines the entry point for the console application.
+//
+#include<iostream>
+#include<string>
+
+using namespace std;
+
+int loopCheck(int pos, string song)
+{
+	string check = song;
+	int i = pos; //starting point within string
+
+	int c = 0; //internal counter variable
+	int flag1 = 0; //1 = note; 2 = accidental; 3 = octave; 4 = beat
+
+	switch (check.at(i)) //check for note letter
+	{
+	case 'A': flag1 = 1; c++; break;
+	case 'B': flag1 = 1; c++; break;
+	case 'C': flag1 = 1; c++; break;
+	case 'D': flag1 = 1; c++; break;
+	case 'E': flag1 = 1; c++; break;
+	case 'F': flag1 = 1; c++; break;
+	case 'G': flag1 = 1; c++; break;
+	case '/': flag1 = 4; i++; return i; break;
+	default: return -1; break;
+	}
+
+	if (flag1 == 1) //check given previous char is note
+	{
+		switch (check.at(i + c))
+		{
+		case 'A': i += c; return i; break;
+		case 'B': i += c; return i; break;
+		case 'C': i += c; return i; break;
+		case 'D': i += c; return i; break;
+		case 'E': i += c; return i; break;
+		case 'F': i += c; return i; break;
+		case 'G': i += c; return i; break;
+		case '#': flag1 = 2; c++; break;
+		case 'b': flag1 = 2; c++; break;
+		case '2': flag1 = 3; c++; break;
+		case '3': flag1 = 3; c++; break;
+		case '4': flag1 = 3; c++; break;
+		case '5': flag1 = 3; c++; break;
+		case '6':
+			if (check.at(i) == 'C') //special case C6
+			{
+				flag1 = 3;
+				c++;
+				break;
+			}
+			else
+			{
+				return -1; break;
+			}
+		case '/': flag1 = 4; c++; i += c; return i; break;
+		default: return -1; break;
+		}
+	}
+
+	if (flag1 == 2) //check given previous char is accidental
+	{
+		switch (check.at(i + c))
+		{
+		case 'A': i += c; return i; break;
+		case 'B': i += c; return i; break;
+		case 'C': i += c; return i; break;
+		case 'D': i += c; return i; break;
+		case 'E': i += c; return i; break;
+		case 'F': i += c; return i; break;
+		case 'G': i += c; return i; break;
+		case '2': flag1 = 3; c++; break;
+		case '3': flag1 = 3; c++; break;
+		case '4': flag1 = 3; c++; break;
+		case '5': flag1 = 3; c++; break;
+		case '6':
+			if (check.at(i + c - 1) == 'b') //special case Cb6
+			{
+				if (check.at(i + c - 2) == 'C')
+				{
+					flag1 = 3;
+					c++;
+					break;
+				}
+			}
+		case '1':
+			if (check.at(i + c - 1) == '#') //special case B#1
+			{
+				if (check.at(i + c - 2) == 'B')
+				{
+					flag1 = 3;
+					c++;
+					break;
+				}
+			}
+		case '/': flag1 = 4; c++; i += c; return i; break;
+		default: return -1; break;
+		}
+	}
+
+	if (flag1 == 3) //check given previous char is octave number
+	{
+		switch (check.at(i + c))
+		{
+		case 'A': i += c; return i; break;
+		case 'B': i += c; return i; break;
+		case 'C': i += c; return i; break;
+		case 'D': i += c; return i; break;
+		case 'E': i += c; return i; break;
+		case 'F': i += c; return i; break;
+		case 'G': i += c; return i; break;
+		case '/': c++; i += c; return i; break;
+		default: return -1; break;
+		}
+	}
+}
+
+bool hasCorrectSyntax(string song)
+{
+	string check = song;
+	int i = 0; //counter variable
+	int flag = 0; //0 = no error; 1 = error
+
+	if (check.length() == 0)
+		return true;
+
+	for (i = 0; i < check.length();)
+	{
+
+		int c = 0; //internal counter variable
+		int flag1 = 0; //1 = note; 2 = accidental; 3 = octave; 4 = beat
+		
+		switch (check.at(i)) //check for note letter
+		{
+		case 'A': flag1 = 1; c++; break;
+		case 'B': flag1 = 1; c++; break;
+		case 'C': flag1 = 1; c++; break;
+		case 'D': flag1 = 1; c++; break;
+		case 'E': flag1 = 1; c++; break;
+		case 'F': flag1 = 1; c++; break;
+		case 'G': flag1 = 1; c++; break;
+		case '/': flag1 = 4; i++; break;
+		default: flag = 1; break;
+		}
+
+		if (flag1 == 1) //check given previous char is note
+		{
+			switch (check.at(i + c))
+			{
+			case 'A': i += c; break;
+			case 'B': i += c; break;
+			case 'C': i += c; break;
+			case 'D': i += c; break;
+			case 'E': i += c; break;
+			case 'F': i += c; break;
+			case 'G': i += c; break;
+			case '#': flag1 = 2; c++; break;
+			case 'b': flag1 = 2; c++; break;
+			case '2': flag1 = 3; c++; break;
+			case '3': flag1 = 3; c++; break;
+			case '4': flag1 = 3; c++; break;
+			case '5': flag1 = 3; c++; break;
+			case '6':
+				if (check.at(i) == 'C') //special case C6
+				{
+					flag1 = 3;
+					c++;
+					break;
+				}
+				else
+				{
+					flag = 1; break;
+				}
+			case '/': flag1 = 4; c++; i += c; break;
+			default: flag = 1; break;
+			}
+		}
+
+		if (flag1 == 2) //check given previous char is accidental
+		{
+			switch (check.at(i + c))
+			{
+			case 'A': i += c; break;
+			case 'B': i += c; break;
+			case 'C': i += c; break;
+			case 'D': i += c; break;
+			case 'E': i += c; break;
+			case 'F': i += c; break;
+			case 'G': i += c; break;
+			case '2': flag1 = 3; c++; break;
+			case '3': flag1 = 3; c++; break;
+			case '4': flag1 = 3; c++; break;
+			case '5': flag1 = 3; c++; break;
+			case '6':
+				if (check.at(i + c - 1) == 'b') //special case Cb6
+				{
+					if (check.at(i + c - 2) == 'C')
+					{
+						flag1 = 3;
+						c++;
+						break;
+					}
+				}
+			case '1':
+				if (check.at(i + c - 1) == '#') //special case B#1
+				{
+					if (check.at(i + c - 2) == 'B')
+					{
+						flag1 = 3;
+						c++;
+						break;
+					}
+				}
+			case '/': flag1 = 4; c++; i += c; break;
+			default: flag = 1; break;
+			}
+		}
+
+		if (flag1 == 3) //check given previous char is octave number
+		{
+			switch (check.at(i + c))
+			{
+			case 'A': i += c; break;
+			case 'B': i += c; break;
+			case 'C': i += c; break;
+			case 'D': i += c; break;
+			case 'E': i += c; break;
+			case 'F': i += c; break;
+			case 'G': i += c; break;
+			case '/': c++; i += c; break;
+			default: flag = 1; break;
+			}
+		}
+
+	}
+
+	if (flag = 0)
+		return true;
+	else if (flag = 1)
+		return false;
+	return false;
+}
+
+int main()
+{
+	string t;
+		cout << "Enter song: ";
+		getline(cin, t);
+		cout << "hasCorrectSyntax returns ";
+		if (hasCorrectSyntax(t) == true)
+			cout << "true" << endl;
+}
+
