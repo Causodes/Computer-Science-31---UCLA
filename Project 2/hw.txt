@@ -1,0 +1,76 @@
+1. 
+endlendl
+grendel
+
+2. 
+It prints out a pyramid made up of #, starting with one # on the top adding one more # than the preceding level each time it goes down. The number of levels depends on user input, with the last level having the same number of # as the user input.
+
+3. 
+#include <iostream>
+using namespace std;
+
+int main()
+{
+	int side;
+
+	cout << "Enter a number: ";
+	cin >> side;
+
+	for (int i = 0; i < side; i++)
+	{
+		int j = i;
+		while (j >= 0)
+		{
+			j--;
+			cout << "#";
+		}
+		cout << "\n";
+	}
+}
+
+4.
+#include <iostream>
+using namespace std;
+
+int main()
+{
+	int side;
+
+	cout << "Enter a number: ";
+	cin >> side;
+
+	int i = 0;
+
+	if (side > 0)
+	{
+		do {
+			int j = i;
+			while (j >= 0)
+			{
+				j--;
+				cout << "#";
+			}
+			cout << "\n";
+			i++;
+		} while (i < side);
+	}
+}
+
+5.
+	switch (codeSection) {
+		case 281:
+			cout << "bigamy";
+			break;
+		case 321:
+		case 322:
+			cout << "selling illegal lottery tickets";
+			break;
+		case 383:
+			cout << "selling rancid butter";
+			break;
+		case 589:
+			cout << "wounding a bird in a public cemetery";
+			break;
+		default:
+			cout << "some other crime";
+	}

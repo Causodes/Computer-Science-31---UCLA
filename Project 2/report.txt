@@ -1,0 +1,25 @@
+a. The most notable obstacles faced during the creation of the program was testing all the edge scenarios for the "Student? (y/n) : " test; specifically, noting the fact that if a character data type was used to store the user response, if the user were to type "yselfhsdh", the program would only read in the first character 'y' and consequently not treat the user input as erroneous. 
+To overcome this obstacle, a string data type had to be used instead. but before taking in user input, a cin.ignore(256, '\n'); statement was required so that the string would not read in the '\n' character left behind from previous input.
+Other obstacles that were faced included ensuring that for the if and else if statement series that the program would go first from specific case to general case so that a general case would not fulfill the if statement, even if it were a more specific case.
+b. Input for rider's age:
+	0: reason: 0 is not considered a negative number; program consequently should not handle it as an individual under the age of 18 and give breaks as appropriate.
+	17: reason: number is maximum possible value to qualify for breaks, program should handle it as so.
+	18: reason: number is minimum value that does not qualify for breaks, program should handle it as so.
+	-1: reason: -1 is a negative number; program should handle it as so.
+	64: reason: number is just under the limit for senior, program should not handle it as a senior.
+	65: reason: number is minimum requirement as a senior, program should handle it as a senior.
+   Input for student status:
+    y: reason: y is one of the parameters the program is designed to accept.
+	n: reason: n is one of the parameters the program is designed to accept.
+	ysdfh: reason: ysdfh is not to be accepted by the program; however, if the program stores user input as a character, the program will accept the value as it only takes the first character, being 'y'.
+	nsdf: reason: nsdf is not to be accepted by the program; however, if the program stores user input as a character, the program will accept the value as it only takes the first character, being 'n'.
+	s: reason: s is neither 'y' nor 'n', and thus not to be accepted. Serves purpose as a generic test for a noncompatible input.
+   Input for destination:
+    : reason: if no destination is input, the program is to not accept the value and give the following error message: "You msut enter a destination"
+	sldkjf: reason: generic user input that the program is to accept.
+   Input for number of zone boundaries crossed:
+    -2: reason: -2 is a negative number, the program should handle it as so.
+	0: reason: 0 is a special case situation for the program given certain other qualifications, and should be handled as so.
+	1: reason: 1 is a special case situation for the program given certain other qualifications, and should be handled as so.
+	2: reason: lowest possible generic case user input for the program, and should be handled as a generic case.
+	
