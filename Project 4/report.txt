@@ -1,0 +1,56 @@
+a. 
+The most notable obstacle that was overcome was creating a sorting algorithm that did not rely on a second array being created for the split function. Other obstacles consisted of certain while loops going out of array index while tracing through the string array. The final major obstacle consisted of addressing all the edge scenarios of the program, such as for the lookUpAny function if n1 and n2 were both 0, what should have been the return value of the funciton.
+b.
+string a[5] = {"a", "A", "aa", "Aa", "AA"};
+string b[5] = {"b", "b", "BB", "b", "BB"};
+string b1[4] = {"b", "b", "bb", "bb"};
+string b2[9] = {"b", "b", "BB", "b", "BB","b", "b", "bb", "bb"};
+string b3[4] = { "b", "b", "bb", "bb" };
+string b4[4] = { "bbb", "bbb", "BB", "bb" };
+
+assert(appendToAll(a, 0, "!!") == 0 && a[0] == "a"); //string array on zero
+assert(appendToAll(a, -1, "!!") == -1 && a[0] == "a"); //invalid n value
+assert(appendToAll(a, 3, "!!") == 3 && a[1] == "A!!" && a[3] == "Aa"); //checks appendToAll, including stopping early
+
+assert(lookup(a, 0, "a!!") == -1); //string array of zero
+assert(lookup(a, 1, "aa!!") == -1); //"aa" out of index
+assert(lookup(a, 5, "aa!!") == 2); //position 2 in array
+
+assert(positionOfMax(a, 0) == 0); //string array of zero
+assert(positionOfMax(a, -1) == -1); //invalid n value
+assert(positionOfMax(a, 5) == 2); //maximum value
+
+assert(rotateLeft(a, 0, 0) == -1); //position same value as n
+assert(rotateLeft(a, -1, 0) == -1); //invalid n
+assert(rotateLeft(a, 1, -1) == -1); //invalid pos
+assert(rotateLeft(a, 1, 0) == 0); //special case single element
+assert(rotateLeft(a, 5, 1) == 1 && a[1] == "aa!!" && a[4] == "A!!"); //test for valid rotation
+
+assert(countRuns(b, 0) == 0); //empty string array
+assert(countRuns(b, -1)); //invalid n
+assert(countRuns(b, 5) == 4); //test for different last two values
+assert(countRuns(b, 2) == 1); //test for no change
+
+assert(flip(b, 0) == 0); //empty string array
+assert(flip(b, -1) == -1); //invalid n
+assert(flip(b, 5) == 5 && b[0] == "BB" && b[4] == "b" && b[2] == "BB"); //test for odd number of elements
+assert(flip(b1, 4) == 4 && b1[0] == "bb" && b1[3] == "b" && b1[2] == "b"); //test for even number of elements
+
+assert(subsequence(b2, 0, b1, 0) == 0); //test for edge case
+assert(subsequence(b2, 9, b1, 0) == 0); //test for edge case
+assert(subsequence(b2, 0, b1, 1) == -1); //test for edge case
+assert(subsequence(b2, 0, b1, -1) == -1); //test for invalid input
+assert(subsequence(b2, -1, b1, 0) == -1); //test for invalid input
+assert(subsequence(b2, 9, b1, 4) == -1); //test for valid input; no match, out of bounds exception test
+assert(subsequence(b2, 9, a, 5) == -1); //test for valid input; no match
+assert(subsequence(b2, 9, b3, 4) == 5); //test for valid input
+
+assert(lookupAny(b1, 4, b2, 0) == -1); //test for invalid n2
+assert(lookupAny(b1, -1, b2, 9) == -1); //test for invalid n1
+assert(lookupAny(b1, 0, b2, 9) == 0); //test for valid edge scenario
+assert(lookupAny(b1, 4, a, 5) == -1); //no match
+assert(lookupAny(b4, 4, b3, 4) == 3); //match at nonzero location
+
+assert(split(b2, -1, "BBB") == -1); //test for invalid n
+assert(split(b2, 0, "BBB") == 0); //test for empty array
+assert(split(b2, 9, "BBB") == 2); //test for valid split
