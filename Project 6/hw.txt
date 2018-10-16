@@ -1,0 +1,203 @@
+1.
+a.
+    int main()
+    {
+        int arr[3] = { 5, 10, 15 };
+        int* ptr = arr;
+
+        *ptr = 10;          // set arr[0] to 30
+        *(ptr + 1) = 20;      // set arr[1] to 20
+        ptr += 2;
+        ptr[0] = 30;        // set arr[2] to 10
+
+        while (ptr >= arr)
+        {
+            cout << *ptr << endl;    // print values
+			ptr--;
+        }
+    }
+b.
+The function fails to return the maximum value of the array as it passes in a copy of the pointer, rather than a reference. Therefore, the function findMax only edits a local copy of the variable rather than the variable itself. This can be remedied by passing in a reference to the pointer, rather than a copy, by adding an ampersand to the argument.
+    void findMax(int arr[], int n, int* &pToMax)
+    {
+        if (n <= 0) 
+            return;      // no items, no maximum!
+    
+        pToMax = arr;
+
+        for (int i = 1; i < n; i++)
+        {
+            if (arr[i] > *pToMax)
+                 pToMax = arr + i;
+        }
+    }       
+
+    int main()
+    {
+        int nums[4] = { 5, 3, 15, 6 };
+        int* ptr;
+
+        findMax(nums, 4, ptr);
+        cout << "The maximum is at address " << ptr << endl;
+        cout << "It's at position " << ptr - nums << endl;
+        cout << "Its value is " << *ptr << endl;
+    }
+c.
+The function fails to work as the pointer ptr is not initialized; therefore by declaring an integer value first and by setting the pointer to the address of that value, we are therefore able to initialize the value of the pointer variable.
+    void computeCube(int n, int* ncubed)
+    {
+        *ncubed = n * n * n;
+    }
+
+    int main()
+    {
+		int n;
+		int* ptr = &n;
+        computeCube(5, ptr);
+        cout << "Five cubed is " << *ptr << endl;
+    }
+d.
+The function fails as it compares the addresses of the individual character elements, rather than the values. This can be addressed by dereferencing the pointer variables.
+   // return true if two C strings are equal
+    bool strequal(const char str1[], const char str2[])
+    {
+        while (*str1 != 0  &&  *str2 != 0)
+        {
+            if (*str1 != *str2)  // compare corresponding characters
+                return false;
+            str1++;            // advance to the next character
+            str2++;
+        }
+        return *str1 == *str2;   // both ended at same time?
+    }
+
+    int main()
+    {
+        char a[15] = "Zhou";
+        char b[15] = "Zhu";
+
+        if (strequal(a,b))
+            cout << "They're the same person!\n";
+    }
+e.
+The issue with the segment of code is that the array does not exist outside of the getPtrToArray function. Therefore, when the scope returns to main the previously declared space for the array is freed so the values that are printed out may be garbage values.
+
+2.
+a. double* cat;
+b. double mouse[5];
+c. cat = mouse + 4;
+d. *cat = 25;
+e. *(mouse + 3) = 42;
+f. cat = cat - 3;
+g. cat[1] = 54;
+h. cat[0] = 27;
+i. bool b = *cat == *(cat + 1);
+j. bool d = cat == mouse;
+
+3.
+a.
+	double mean(const double* scores, int numScores)
+	{
+		double tot = 0;
+		int i = 0;
+		for (int i = 0; i < numScore; i++)
+		{
+			tot += *(scores + i);
+		}
+		return tot / numScores;
+	}
+b.
+    const char* findTheChar(const char* str, char chr)
+    {
+        for (int k = 0; *(str+k) != '\0'; k++)
+            if (*(str+k) == chr)
+                return (str+k);
+
+        return nullptr;
+    }
+c.
+	const char* findTheChar(const char* str, char chr)
+	{
+		while (*str != '\0')
+		{
+			if (*str == chr)
+				return str;
+			str++;
+		}
+		return nullptr;
+	}
+
+4.
+ #include <iostream>
+    using namespace std;
+
+    int* maxwell(int* a, int* b)
+    {
+        if (*a > *b)
+            return a;
+        else
+            return b;
+    }
+
+    void swap1(int* a, int* b)
+    {
+        int* temp = a;
+        a = b;
+        b = temp;
+    }
+
+    void swap2(int* a, int* b)
+    {
+        int temp = *a;
+        *a = *b;
+        *b = temp;
+    }
+
+    int main()
+    {
+        int array[6] = { 5, 3, 4, 17, 22, 19 };
+
+        int* ptr = maxwell(array, &array[2]); //return position in memory of array[0];
+        *ptr = -1; //array[0] = -1;
+        ptr += 2; //&array[2];
+        ptr[1] = 9; //array[3] = 9;
+        *(array+1) = 79; //array[1] = 79; array = {-1, 79, 4, 9, 22, 19};
+
+        cout << &array[5] - ptr << endl; //&array[5] - &array[2] = 3;
+
+        swap1(&array[0], &array[1]); //swaps references to &array[0] and &array[1]; no change in array values
+        swap2(array, &array[2]); //swaps values of array[0] and array[2]; array = {4, 79, -1, 9, 22, 19};
+
+        for (int i = 0; i < 6; i++) //prints each element in the array
+            cout << array[i] << endl;
+    } 
+The above function prints the following: 
+3
+4
+79
+-1
+9
+22
+19
+The 3 is printed as following the operations in the main function denoted by the comments; the statement cout << &array[5] - ptr << endl prints the difference in reference value of array[5] and ptr (array[2]), being 3.
+The following six values that are printed are the values of the array, following the operations that are denoted by the comments in the main function.
+
+5.
+void removeS(char* cstring)
+{
+
+	while (*cstring != '\0')
+	{
+		if (*cstring == 's' || *cstring == 'S')
+		{
+			char* temp = cstring;
+			while (*temp != '\0')
+			{
+				*temp = *(temp + 1);
+				temp++;
+			}
+			cstring--;
+		}
+		cstring++;
+	}
+}
