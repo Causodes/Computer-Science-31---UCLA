@@ -1,0 +1,36 @@
+a.
+The most notable obstacle that was encountered during the writing of this program was finding a method so that the program would not double count stars and planets. This was overcome by replacing each instance of a match for either a star or a planet with a different placeholder character. A second issue was during the comparison of stars, the loops traversing the arrays wouldgo out of index for c-strings of different lengths. This was overcome by finding the length of each c-string beforehand and using the counter for the shorter string.
+
+b.
+runOneRound pseudocode:
+
+given no invalid parameters are passed
+repeatedly:
+	while user input does not match hidden word
+		check for c-string length between 4 and 6
+			if not output error message
+		check for c-string in list of words
+			if not output error message
+		given above is true:
+			increase score by 1
+			compares each char in each c-string to corresponding char
+				if same replace both char with symbol and increment star
+			compares each char in probe with all the chars in hidden word
+				if same replace both char with symbol and increment planet
+			if not complete match
+				output stars and planets and repeat
+			else
+				return score and break
+
+main pseudocode:
+
+calls getWords from utilities.cpp and checks for loaded words
+user input of round number
+	checks for positive number of rounds
+	given rounds is positive
+	repeatedly:
+		for n number of rounds
+			generate random integer
+			find length of keyword corresponding to random integer
+			set score equal to output from runOneRound
+			set minimum, maximum, and average and output to console
